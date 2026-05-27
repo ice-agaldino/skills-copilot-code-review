@@ -6,6 +6,9 @@ Uma aplicação FastAPI super simples que permite aos alunos visualizar e se ins
 
 - Visualizar todas as atividades extracurriculares disponíveis
 - Inscrever-se em atividades
+- Login de professores para operacoes administrativas
+- Anuncios dinamicos carregados do banco de dados
+- Gerenciamento de anuncios (criar, editar, excluir) para usuarios autenticados
 
 ## Como começar
 
@@ -31,6 +34,13 @@ Uma aplicação FastAPI super simples que permite aos alunos visualizar e se ins
 | ------ | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Obtém todas as atividades com detalhes e número atual de participantes |
 | POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Inscreve-se em uma atividade                                         |
+| POST   | `/auth/login?username={username}&password={password}`            | Realiza login de professor                                            |
+| GET    | `/auth/check-session?username={username}`                        | Valida sessao por usuario                                             |
+| GET    | `/announcements/active`                                           | Lista anuncios ativos (publico)                                       |
+| GET    | `/announcements?teacher_username={username}`                      | Lista todos os anuncios para gerenciamento (autenticado)              |
+| POST   | `/announcements?teacher_username={username}`                      | Cria anuncio com expiracao obrigatoria e inicio opcional              |
+| PUT    | `/announcements/{announcement_id}?teacher_username={username}`    | Atualiza anuncio existente                                             |
+| DELETE | `/announcements/{announcement_id}?teacher_username={username}`    | Exclui anuncio                                                         |
 
 ## Modelo de Dados
 
@@ -46,4 +56,4 @@ A aplicação usa um modelo de dados simples com identificadores significativos:
    - Nome
    - Série
 
-Todos os dados são armazenados em memória, o que significa que serão resetados quando o servidor for reiniciado.
+Os dados sao armazenados no MongoDB local configurado no backend.

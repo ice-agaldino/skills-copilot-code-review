@@ -12,14 +12,23 @@
     />
   </head>
   <body>
-    <div class="announcement-banner">
-      📢 As inscrições para atividades estão abertas até o final do mês. Não perca sua vaga!
-    </div>
+    <section id="announcement-banner" class="announcement-banner" aria-live="polite">
+      <p class="announcement-loading">Carregando anuncios...</p>
+    </section>
     <header>
       <h1>Mergington High School</h1>
       <h2>Atividades Extracurriculares</h2>
       <div id="user-controls">
         <div id="user-status">
+          <button
+            id="manage-announcements-button"
+            class="icon-button hidden"
+            type="button"
+            aria-label="Gerenciar anuncios"
+          >
+            <span aria-hidden="true">📣</span>
+            <span>Anuncios</span>
+          </button>
           <button id="login-button" class="icon-button">
             <span class="user-icon">👤</span>
             <span>Entrar</span>
@@ -134,6 +143,60 @@
           <button type="submit">Entrar</button>
         </form>
         <div id="login-message" class="hidden message"></div>
+      </div>
+    </div>
+
+    <!-- Announcements Management Modal -->
+    <div
+      id="announcements-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="announcements-title"
+    >
+      <div class="modal-content announcements-modal-content">
+        <span class="close-modal close-announcements-modal" aria-label="Fechar">&times;</span>
+        <h3 id="announcements-title">Gerenciar Anuncios</h3>
+        <p class="announcements-subtitle">
+          Crie, edite e remova anuncios com data de expiracao obrigatoria.
+        </p>
+
+        <form id="announcement-form" class="announcement-form">
+          <input type="hidden" id="announcement-id" />
+          <div class="form-group">
+            <label for="announcement-message">Mensagem</label>
+            <textarea
+              id="announcement-message"
+              required
+              maxlength="500"
+              rows="3"
+              placeholder="Escreva o anuncio para os alunos e professores"
+            ></textarea>
+          </div>
+          <div class="announcement-date-grid">
+            <div class="form-group">
+              <label for="announcement-start">Inicio (opcional)</label>
+              <input type="datetime-local" id="announcement-start" />
+            </div>
+            <div class="form-group">
+              <label for="announcement-expire">Expiracao</label>
+              <input type="datetime-local" id="announcement-expire" required />
+            </div>
+          </div>
+          <div class="announcement-form-actions">
+            <button type="submit" id="announcement-submit">Salvar anuncio</button>
+            <button type="button" id="announcement-cancel-edit" class="secondary-action hidden">
+              Cancelar edicao
+            </button>
+          </div>
+        </form>
+
+        <div id="announcements-manager-message" class="hidden message"></div>
+
+        <div class="announcements-list-container">
+          <h4>Anuncios cadastrados</h4>
+          <div id="announcements-list" class="announcements-list"></div>
+        </div>
       </div>
     </div>
 
